@@ -1,0 +1,6 @@
+result
+result-*
+
+*.hi
+*.o
+Main

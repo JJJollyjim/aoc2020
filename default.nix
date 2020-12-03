@@ -5,6 +5,7 @@ let pkgs = (import <nixpkgs> {});
     paths = [
       ./day1
       ./day2
+      ./day3
     ];
 in
 with builtins;

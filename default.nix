@@ -6,6 +6,7 @@ let pkgs = (import <nixpkgs> {});
       ./day1
       ./day2
       ./day3
+      ./day4
     ];
 in
 with builtins;
@@ -17,7 +18,7 @@ listToAttrs (map (path: rec {
       bin = runCommand
         "aoc-${name}"
         { src = filterSource (p: type: (type == "regular") && (match "[^.].*\.hs" (baseNameOf p)) != null) path; }
-        "${ghc}/bin/ghc $src/Main.hs -O -i${haskellLibDir} -outputdir . -o $out";
+        "${haskellPackages.ghcWithPackages (p: [p.split])}/bin/ghc $src/Main.hs -O -i${haskellLibDir} -outputdir . -o $out";
 
       parts = {
         a = writeScript "aoc-${name}-a" "${bin} a";

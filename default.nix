@@ -1,5 +1,8 @@
-let pkgs = (import <nixpkgs> {});
-    haskellLibDir = ./lib_hs;
+with builtins;
+with (import <nixpkgs> {});
+
+let haskellLibDir = ./lib_hs;
+    haskellCompiler = pkgs.haskellPackages.ghcWithPackages (p: [p.split]);
 
     # Add days here
     paths = [
@@ -9,8 +12,6 @@ let pkgs = (import <nixpkgs> {});
       ./day4
     ];
 in
-with builtins;
-with pkgs;
 
 listToAttrs (map (path: rec {
     name = baseNameOf path;
@@ -18,7 +19,7 @@ listToAttrs (map (path: rec {
       bin = runCommand
         "aoc-${name}"
         { src = filterSource (p: type: (type == "regular") && (match "[^.].*\.hs" (baseNameOf p)) != null) path; }
-        "${haskellPackages.ghcWithPackages (p: [p.split])}/bin/ghc $src/Main.hs -O -i${haskellLibDir} -outputdir . -o $out";
+        "${haskellCompiler}/bin/ghc $src/Main.hs -O -i${haskellLibDir} -outputdir . -o $out";
 
       parts = {
         a = writeScript "aoc-${name}-a" "${bin} a";
@@ -43,4 +44,8 @@ listToAttrs (map (path: rec {
           "${partBin} < $input/input | tee $out"
         ) parts;
     };
-  }) paths)
+  }) paths) // {
+    shell = mkShell {
+      buildInputs = [ haskellCompiler ];
+    };
+  }

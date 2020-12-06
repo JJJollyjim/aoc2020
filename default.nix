@@ -11,6 +11,7 @@ let haskellLibDir = ./lib_hs;
       ./day3
       ./day4
       ./day5
+      ./day6
     ];
 in
 

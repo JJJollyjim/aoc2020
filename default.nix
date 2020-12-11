@@ -16,6 +16,7 @@ let
     ./day8
     ./day9
     ./day10
+    ./day11
   ];
   days = listToAttrs (map
     (path: rec {

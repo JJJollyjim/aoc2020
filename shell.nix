@@ -1,1 +1,4 @@
-(import ./default.nix).shell
+with (import <nixpkgs> { });
+mkShell {
+  buildInputs = [ (import ./default.nix).compiler ];
+}

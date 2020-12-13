@@ -1,3 +1,4 @@
+{-# LANGUAGE TupleSections #-}
 import AOC
 
 import Text.Parsec
@@ -11,12 +12,20 @@ main = runAOC progA progB
 
 --- Part A
 progA i = let Right (time, busses) = parse notes "" i
-          in show $ head $ (\now -> ((now - time) *) <$> (arrivals (catMaybes busses) now)) =<< [time..]
+  in show $ head $ (\now -> ((now - time) *) <$> (arrivals (catMaybes busses) now)) =<< [time..]
 
 arrivals busses time = filter ((== 0) . (time `mod`)) busses
 
 --- Part B
-progB = undefined
+progB i = let Right (_, busses) = parse notes "" i
+  in show $ head $ foldl (\candidates pred -> fasterize $ filter pred candidates) [0..] (makePreds busses)
+
+makePreds :: [Maybe Int] -> [Int -> Bool]
+makePreds busses = map (\(i, n) -> (== 0) . (`mod` n) . (+ i)) $ catMaybes $ zipWith (\i n -> (i,) <$> n) [0..] busses
+
+-- Takes a lazily-generated list, and returns the same list, but magically faster :D
+--  * universiality not guaranteed
+fasterize (x1:x2:_) = [x1,x2..]
 
 --- Parsing
 

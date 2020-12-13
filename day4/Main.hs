@@ -1,13 +1,13 @@
-import AOC (runAOC)
+import           AOC             (runAOC)
 
-import Data.List.Split (splitWhen)
-import Data.List (partition)
-import Text.Read (readMaybe)
+import           Data.List       (partition)
+import           Data.List.Split (splitWhen)
+import           Text.Read       (readMaybe)
 
 splitOnFirst c xs = (takeWhile (\x -> x /= c) xs, tail (dropWhile (\x -> x /= c) xs))
 
 isJust (Just _) = True
-isJust Nothing = False
+isJust Nothing  = False
 
 hasKey :: (Eq k) => k -> [(k, a)] -> Bool
 hasKey k l = isJust $ lookup k l
@@ -33,7 +33,7 @@ inrange min max = (atleast min =<<) . (atmost max)
 
 checkheight (n, "cm") = readMaybe n >>= inrange 150 193
 checkheight (n, "in") = readMaybe n >>= inrange 59 76
-checkheight _ = Nothing
+checkheight _         = Nothing
 
 hexes = ['0'..'9'] ++ ['a'..'f']
 digits = ['0'..'9']
@@ -44,12 +44,12 @@ splitHeight xs = (takeWhile (flip elem digits) xs, dropWhile (flip elem digits) 
 inlist xs x = if elem x xs then return x else fail ""
 
 checkhair ['#',a,b,c,d,e,f] = mapM (inlist hexes) [a,b,c,d,e,f]
-checkhair _ = Nothing
+checkhair _                 = Nothing
 
 checkeye = inlist ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
 
 checkpid [a,b,c,d,e,f,g,h,i] = mapM (inlist digits) [a,b,c,d,e,f,g,h,i]
-checkpid _ = Nothing
+checkpid _                   = Nothing
 
 validatorsB = [ isJust . (inrange 1920 2002 =<<) . (readMaybe =<<) . lookup "byr"
               , isJust . (inrange 2010 2020 =<<) . (readMaybe =<<) . lookup "iyr"

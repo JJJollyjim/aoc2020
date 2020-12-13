@@ -1,5 +1,5 @@
-import AOC
-import Data.Complex
+import           AOC
+import           Data.Complex
 
 main = runAOC prog progB
 

@@ -1,5 +1,5 @@
-import AOC
-import Data.List.Split (splitWhen)
+import           AOC
+import           Data.List.Split (splitWhen)
 
 count quantifier group = length $ filter (\q -> quantifier (elem q) group) ['a'..'z']
 

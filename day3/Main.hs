@@ -1,4 +1,4 @@
-import AOC (runAOC)
+import           AOC (runAOC)
 
 isTree = (== '#')
 

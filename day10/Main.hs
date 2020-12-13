@@ -1,5 +1,5 @@
-import AOC
-import Data.List (sort, group)
+import           AOC
+import           Data.List (group, sort)
 
 main = runAOC progA progB
 

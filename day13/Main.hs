@@ -1,12 +1,12 @@
 {-# LANGUAGE TupleSections #-}
-import AOC
+import           AOC
 
-import Text.Parsec
-import Text.Parsec.String (Parser)
+import           Text.Parsec
+import           Text.Parsec.String (Parser)
 
-import Data.List (foldl')
-import Data.Maybe (catMaybes)
-import Data.Char (digitToInt)
+import           Data.Char          (digitToInt)
+import           Data.List          (foldl')
+import           Data.Maybe         (catMaybes)
 
 main = runAOC progA progB
 

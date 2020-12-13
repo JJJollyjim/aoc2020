@@ -1,6 +1,6 @@
 module AOC (runAOC)
   where
-import System.Environment (getArgs)
+import           System.Environment (getArgs)
 
 runAOC :: (String -> String) -> (String -> String) -> (IO ())
 runAOC a b = getArgs >>= (interact . part . head)

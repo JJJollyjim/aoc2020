@@ -1,5 +1,5 @@
-import AOC
-import Numeric (readInt)
+import           AOC
+import           Numeric (readInt)
 
 readBinary c0 c1 = readInt 2 valid conv
   where valid c = c == c0 || c == c1

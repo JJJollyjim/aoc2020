@@ -1,4 +1,4 @@
-import AOC (runAOC)
+import           AOC (runAOC)
 
 splitOnFirst c xs = (takeWhile (\x -> x /= c) xs, tail (dropWhile (\x -> x /= c) xs))
 

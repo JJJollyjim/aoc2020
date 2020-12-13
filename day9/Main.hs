@@ -1,4 +1,4 @@
-import AOC
+import           AOC
 import qualified Data.Vector as V
 
 main = runAOC progA progB

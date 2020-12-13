@@ -1,11 +1,11 @@
-import AOC
-import Text.Parsec
-import Text.Parsec.String -- (Parser)
+import           AOC
+import           Text.Parsec
+import           Text.Parsec.String
 
-import Data.List (foldl')
-import Data.Char (digitToInt)
-import qualified Data.Set as Set
-import Data.Set (Set, union)
+import           Data.Char          (digitToInt)
+import           Data.List          (foldl')
+import           Data.Set           (Set, union)
+import qualified Data.Set           as Set
 
 main = runAOC progA progB
 

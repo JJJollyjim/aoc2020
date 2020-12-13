@@ -1,7 +1,7 @@
 {-# LANGUAGE BangPatterns #-}
-import AOC
+import           AOC
 
-import Data.Maybe (fromMaybe, catMaybes)
+import           Data.Maybe  (catMaybes, fromMaybe)
 import qualified Data.Vector as V
 
 main = runAOC progA progB
@@ -18,9 +18,9 @@ progB = prog (mkDecider 5) (castB)
 
 castB !floor !c !dc = let c' = add dc c
   in case getAt floor c' of
-       Nothing -> Nothing
+       Nothing  -> Nothing
        Just '.' -> castB floor c' dc
-       Just !s -> Just s
+       Just !s  -> Just s
 
 -- Shared
 

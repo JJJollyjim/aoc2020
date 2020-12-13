@@ -1,11 +1,11 @@
-import AOC
+import           AOC
 -- import Text.Parsec
 -- import Text.Parsec.String -- (Parser)
 
 -- import Data.List (foldl')
 -- import Data.Char (digitToInt)
-import qualified Data.Set as Set
-import Data.Vector ((!?), (//), Vector)
+import qualified Data.Set    as Set
+import           Data.Vector (Vector, (!?), (//))
 import qualified Data.Vector as V
 
 type Program = Vector (String, Int)
@@ -31,7 +31,7 @@ runProg = flip (iterateMaybe . runInst) (0, 0)
 
 -- I must be able to build this out of monad behaviour?
 iterateMaybe f x = case f x of
-                     Just x -> x:(iterateMaybe f x)
+                     Just x  -> x:(iterateMaybe f x)
                      Nothing -> []
 
 runInst :: Program -> (Int, Int) -> Maybe (Int, Int)
@@ -46,7 +46,7 @@ parseProg = V.fromList . map (\l -> case (splitOnFirst ' ' l) of (op, arg) -> (o
 
 parseInt :: String -> Int
 parseInt ('+':num) = read num
-parseInt num = read num
+parseInt num       = read num
 
 -- Part B
 

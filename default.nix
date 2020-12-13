@@ -1,7 +1,7 @@
 with builtins;
 with (import <nixpkgs> { });
 let
-  haskellCompiler = pkgs.haskellPackages.ghcWithPackages (p: [ p.split p.vector (p.callPackage ./lib_hs {}) ]);
+  haskellCompiler = pkgs.haskellPackages.ghcWithPackages (p: [ p.split p.vector p.lens (p.callPackage ./lib_hs {}) ]);
 
   # Add days here
   paths = [

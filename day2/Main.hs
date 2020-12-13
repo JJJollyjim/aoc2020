@@ -1,6 +1,6 @@
 import           AOC (runAOC)
 
-splitOnFirst c xs = (takeWhile (\x -> x /= c) xs, tail (dropWhile (\x -> x /= c) xs))
+splitOnFirst c xs = (takeWhile (/= c) xs, tail (dropWhile (/= c) xs))
 
 parseLine :: String -> (Int, Int, Char, String)
 parseLine line = let (start, rest) = splitOnFirst '-' line
@@ -13,7 +13,7 @@ validateA (start, end, chr, pass) = count >= start && count <= end
   where count = length $ filter (== chr) pass
 
 chrMatches chr pass idx = (pass !! (idx - 1)) == chr
-validateB (idx1, idx2, chr, pass) = (chrMatches chr pass idx1) /= (chrMatches chr pass idx2)
+validateB (idx1, idx2, chr, pass) = chrMatches chr pass idx1 /= chrMatches chr pass idx2
 
 prog pred = show . length . filter pred . map parseLine . lines
 

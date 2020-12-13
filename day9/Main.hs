@@ -7,7 +7,7 @@ main = runAOC progA progB
 
 progA = show . V.last . find (not . validate) . windows' . V.fromList . map read . lines
 
-validate window = V.elem (V.last window) ((+) <$> (V.init window) <*> (V.init window))
+validate window = V.elem (V.last window) ((+) <$> V.init window <*> V.init window)
 
 windows n vec = let length = V.length vec
                     starts = [0..(length-n)]
@@ -20,12 +20,12 @@ windows' vec = let length = V.length vec
 
 -- Part B
 
-allSlidingWindowsInDecreasingOrderOfLength :: (V.Vector a) -> ([V.Vector a])
+allSlidingWindowsInDecreasingOrderOfLength :: V.Vector a -> [V.Vector a]
 allSlidingWindowsInDecreasingOrderOfLength vec = let length = V.length vec
                                                      lengths = [length,(length-1)..0]
-                                                 in lengths >>= (flip windows vec)
+                                                 in lengths >>= (`windows` vec)
 
 progB i = let message = V.fromList $ map read $ lines i
               targ = V.last $ find (not . validate) $ windows' message
               thing = find ((== targ) . sum) $ allSlidingWindowsInDecreasingOrderOfLength message
-        in show $ (minimum thing + maximum thing)
+        in show (minimum thing + maximum thing)

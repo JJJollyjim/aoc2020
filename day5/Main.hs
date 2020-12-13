@@ -19,7 +19,7 @@ allIds = map (seatId . readSeat) . lines
 
 onlyElem [x] = x
 
-mySeat ids = onlyElem $ filter (not . flip elem ids) $ [minimum ids..maximum ids]
+mySeat ids = onlyElem $ filter (not . flip elem ids) [minimum ids..maximum ids]
 
 partA = show . maximum . allIds
 partB = show . mySeat . allIds

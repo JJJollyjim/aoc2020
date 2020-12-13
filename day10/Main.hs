@@ -5,18 +5,18 @@ main = runAOC progA progB
 
 -- Part A
 
-progA i = let jolts = 0:(sort $ map read $ lines i)
+progA i = let jolts = 0:sort (map read $ lines i)
               diffs = diff jolts
-  in show $ (length $ filter (==1) diffs) * (1 + (length $ filter (==3) diffs))
+  in show $ length (filter (==1) diffs) * (1 + length (filter (==3) diffs))
 
 diff xs = zipWith (-) (tail xs) xs
 
 -- Part B
 
-progB i = let jolts = 0:(sort $ map read $ lines i)
+progB i = let jolts = 0:sort (map read $ lines i)
               jolts' = jolts ++ [last jolts + 3]
               diffs = diff jolts'
-  in show $ product $ map ((drop 2 tribs) !!) $ map length $ filter ((== 1) . (!! 0)) $ group $ diffs
+  in show $ product $ map ((drop 2 tribs !!) . length) (filter ((== 1) . (!! 0)) $ group diffs)
 
 tribs = 0:0:1:zipWith (+) tribs (tail (zipWith (+) tribs $ tail tribs))
 

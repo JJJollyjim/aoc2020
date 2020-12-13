@@ -2,6 +2,8 @@ import           AOC
 import           Text.Parsec
 import           Text.Parsec.String
 
+import           Data.Functor       (($>))
+import           Data.Bifunctor     (second)
 import           Data.Char          (digitToInt)
 import           Data.List          (foldl')
 import           Data.Set           (Set, union)
@@ -17,10 +19,10 @@ target = "shiny gold"
 
 progA :: String -> String
 progA input = let Right defsFull = parse parser "" input
-                  defs = (\(a,b) -> (a,fst <$> b)) <$> defsFull
+                  defs = Data.Bifunctor.second ((<$>) fst) <$> defsFull
               in show $ length $ Set.delete target $ findFixed (findParents defs) (Set.singleton target)
 
-findParents defs s = s `Set.union` (Set.fromList $ map fst $ filter (\(p, xs) -> any (flip elem s) xs) defs)
+findParents defs s = s `Set.union` Set.fromList (map fst $ filter (\(p, xs) -> any (`elem` s) xs) defs)
 
 -- Part B
 
@@ -28,7 +30,7 @@ progB :: String -> String
 progB input = let Right defs = parse parser "" input
               in show $ countChildren defs target
 
-countChildren defs s = case lookup s defs of (Just children) -> sum $ (\(c, n) -> n * (1 + (countChildren defs c))) <$> children
+countChildren defs s = case lookup s defs of (Just children) -> sum $ (\(c, n) -> n * (1 + countChildren defs c)) <$> children
 
 -- Parsing
 
@@ -40,9 +42,9 @@ colour = word <> string " " <> word
 bag = colour <* space <* string "bag" <* optionMaybe (char 's')
 
 numBag = flip (,) <$> (num <* space) <*> bag
-contents = (string "no other bags" *> pure []) <|> (numBag `sepBy` (string ", "))
+contents = (string "no other bags" $> []) <|> (numBag `sepBy` string ", ")
 
 line = (,) <$> (bag <* space <* string "contain" <* space) <*> (contents <* (string "." <* newline))
 
 num :: Parser Int
-num = (foldl' (\a i -> a * 10 + digitToInt i) 0 <$> many1 digit) <|> (string "no" *> pure 0)
+num = (foldl' (\a i -> a * 10 + digitToInt i) 0 <$> many1 digit) <|> (string "no" $> 0)

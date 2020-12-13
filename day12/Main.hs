@@ -26,8 +26,8 @@ progB i = show $ round $ manhattan $ fst $ foldl (flip stepB) (0 :+ 0, 10 :+ 1) 
 stepB (char:numStr) (pos, way) = let num = read numStr
   in case char of
        'F' -> (pos + real num * way, way)
-       'L' -> (pos, way * (exp (0 :+ fromDeg num)))
-       'R' -> (pos, way * (exp (0 :+ (-fromDeg num))))
+       'L' -> (pos, way * exp (0 :+ fromDeg num))
+       'R' -> (pos, way * exp (0 :+ (-fromDeg num)))
        'N' -> (pos, way + (0 :+ num))
        'S' -> (pos, way - (0 :+ num))
        'E' -> (pos, way + (num :+ 0))
